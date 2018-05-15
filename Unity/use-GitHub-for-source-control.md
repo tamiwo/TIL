@@ -4,10 +4,14 @@ GitHubで共有する
 1. リポジトリを作成
 2. Windowsでクローン
 3. クローンしたディレクトリの下にUnityのプロジェクトを作成
-4. .ignore ファイルを参考の通りに記載
-5. コミット
-6. Macでクローン
-7. Unityでopen
+4. プロジェクトの設定を確認
+   Edit > ProjectSettings > Editor
+   * Virsion ControlのModeがVisible Meta Filesになっている
+   * Asset SerializationのModeがForce Textになっている
+5. .ignore ファイルを参考の通りに記載
+6. コミット
+7. Macでクローン
+8. Unityでopen
 ```
 Opening Project in Non-Matching Editor Installation
 
@@ -17,7 +21,9 @@ The saved project (2018.1.0f2) does not match the launched editor (2017.4.2f2).
 ...
 ```
 で怒られるMac側が古い
-8. 一旦Quitを選ぶ
+
+9. 一旦Quitを選ぶ
+10. Unityのバージョンをあげる
 
 
 
