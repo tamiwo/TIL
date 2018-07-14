@@ -140,7 +140,36 @@ https://qiita.com/mascii/items/77c685df65c4cbca9315
 
 ```
 sudo apt-get install -y npm
+sudo npm cache clean
+sudo npm install npm n -g
 ```
+WARNIGが結構でたがインストールはできたようす
+
+```
+$ sudo npm cache clean
+(node:20616) [DEP0022] DeprecationWarning: os.tmpDir() is deprecated. Use os.tmpdir() instead.
+pi@raspberrypi:~ $ sudo npm install npm n -g
+(node:20633) [DEP0022] DeprecationWarning: os.tmpDir() is deprecated. Use os.tmpdir() instead.
+/usr/local/bin/n -> /usr/local/lib/node_modules/n/bin/n
+npm WARN package.json path-is-inside@1.0.2 No README data
+npm WARN package.json sorted-object@2.0.1 No README data
+/usr/local/bin/npm -> /usr/local/lib/node_modules/npm/bin/npm-cli.js
+/usr/local/bin/npx -> /usr/local/lib/node_modules/npm/bin/npx-cli.js
+npm WARN package.json config-chain@1.1.11 No license field.
+npm WARN package.json cyclist@0.2.2 No license field.
+npm WARN package.json json-schema@0.2.3 No license field.
+npm WARN package.json jsonify@0.0.0 license should be a valid SPDX license expression
+npm WARN package.json punycode@1.4.1 punycode is also the name of a node core module.
+npm WARN package.json qrcode-terminal@0.12.0 No license field.
+npm WARN package.json sntp@1.0.9 No license field.
+npm WARN package.json string_decoder@1.1.1 string_decoder is also the name of a node core module.
+n@2.1.12 /usr/local/lib/node_modules/n
+```
+```
+$ npm -v
+6.2.0
+```
+
 
 Refference
 ----------------------------------------------------------------------
