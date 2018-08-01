@@ -25,9 +25,9 @@ WARNNIGが出ている。
 
 原因がわかっているので
 ```shell
-$ ssh-keygen -R 192.168.0.33
-# Host 192.168.0.33 found: line 10
-/Users/ryota/.ssh/known_hosts updated.
+$ ssh-keygen -R raspberrypi.local
+# Host rasperrypi.local found: line N
+/Users/xxxxx/.ssh/known_hosts updated.
 Original contents retained as /Users/xxxxx/.ssh/known_hosts.old
 ```
 としてサーバ情報を削除する。
