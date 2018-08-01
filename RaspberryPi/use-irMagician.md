@@ -48,5 +48,5 @@ $ sudo python irmcli.py -p -f filename.json
 
 Refference
 ----------------------------------------------------------------------
-[iOS10「ホーム」アプリと「Raspberry Pi + irMagician」でお手軽家電操作。]https://qiita.com/PonDad/items/a17d8b7d0be59f4c7f18
+[iOS10「ホーム」アプリと「Raspberry Pi + irMagician」でお手軽家電操作。](https://qiita.com/PonDad/items/a17d8b7d0be59f4c7f18)
 [netbuffalo_irmcli  irMagician command line utility](https://github.com/netbuffalo/irmcli)
