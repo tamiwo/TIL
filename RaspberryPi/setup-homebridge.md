@@ -165,12 +165,238 @@ npm WARN package.json sntp@1.0.9 No license field.
 npm WARN package.json string_decoder@1.1.1 string_decoder is also the name of a node core module.
 n@2.1.12 /usr/local/lib/node_modules/n
 ```
+
 ```
 $ npm -v
 6.2.0
 ```
 
+で、そのあと
+
+```
+$ sudo n lts
+```
+
+を実行したので
+
+```
+$ node -v
+v8.11.3
+```
+
+となった
+
+再度
+```
+$ sudo npm install -g --unsafe-perm homebridge hap-nodejs node-gyp
+```
+
+```
+$ cd /usr/lib/node_modules/homebridge/
+-bash: cd: /usr/lib/node_modules/homebridge/: No such file or directory
+```
+
+ない。
+
+その前のinstallで
+
+```
+pi@raspberrypi:~ $ sudo npm install -g --unsafe-perm homebridge hap-nodejs node-gyp
+npm WARN notice [SECURITY] hoek has the following vulnerability: 1 moderate. Go here for more details: https://nodesecurity.io/advisories?search=hoek&version=2.16.3 - Run `npm i npm@latest -g` to upgrade your npm version, and then `npm audit` to get more info.
+/usr/local/bin/homebridge -> /usr/local/lib/node_modules/homebridge/bin/homebridge
+```
+
+というログが出ていたので
+```
+$ cd /usr/local/lib/node_modules/homebridge/
+```
+
+として進める
+
+
+
+```
+$ sudo npm install --unsafe-perm bignum
+
+> bignum@0.13.0 install /usr/local/lib/node_modules/homebridge/node_modules/bignum
+> prebuild-install || node-gyp rebuild
+
+prebuild-install WARN install No prebuilt binaries found (target=8.11.3 runtime=node arch=arm platform=linux)
+make: Entering directory '/usr/local/lib/node_modules/homebridge/node_modules/bignum/build'
+  CXX(target) Release/obj.target/bignum/bignum.o
+  SOLINK_MODULE(target) Release/obj.target/bignum.node
+  COPY Release/bignum.node
+make: Leaving directory '/usr/local/lib/node_modules/homebridge/node_modules/bignum/build'
+npm notice created a lockfile as package-lock.json. You should commit this file.
++ bignum@0.13.0
+added 64 packages in 28.177s
+pi@raspberrypi:/usr/local/lib/node_modules/homebridge $ cd /usr/local/lib/node_modules/hap-nodejs/node_modules/mdns
+-bash: cd: /usr/local/lib/node_modules/hap-nodejs/node_modules/mdns: No such file or directory
+```
+
+またない。
+
+http://blog.mogmet.com/hey-siri-turning-on-light-with-rasberry-pi-zero-w-homebridge-remo/
+
+の記事を見て
+	
+```
+$ sudo npm install --unsafe-perm mdns
+$ sudo npm rebuild --unsafe-perm
+```
+
+を実施。失敗。
+
+```
+pi@raspberrypi:/usr/local/lib/node_modules/homebridge $ sudo npm install --unsafe-perm mdns
+
+> mdns@2.4.0 install /usr/local/lib/node_modules/homebridge/node_modules/mdns
+> node-gyp rebuild
+
+make: Entering directory '/usr/local/lib/node_modules/homebridge/node_modules/mdns/build'
+  CXX(target) Release/obj.target/dns_sd_bindings/src/dns_sd.o
+In file included from ../src/dns_sd.cpp:1:0:
+../src/mdns.hpp:32:20: fatal error: dns_sd.h: No such file or directory
+ #include <dns_sd.h>
+                    ^
+compilation terminated.
+dns_sd_bindings.target.mk:150: recipe for target 'Release/obj.target/dns_sd_bindings/src/dns_sd.o' failed
+make: *** [Release/obj.target/dns_sd_bindings/src/dns_sd.o] Error 1
+make: Leaving directory '/usr/local/lib/node_modules/homebridge/node_modules/mdns/build'
+gyp ERR! build error 
+gyp ERR! stack Error: `make` failed with exit code: 2
+gyp ERR! stack     at ChildProcess.onExit (/usr/local/lib/node_modules/npm/node_modules/node-gyp/lib/build.js:258:23)
+gyp ERR! stack     at emitTwo (events.js:126:13)
+gyp ERR! stack     at ChildProcess.emit (events.js:214:7)
+gyp ERR! stack     at Process.ChildProcess._handle.onexit (internal/child_process.js:198:12)
+gyp ERR! System Linux 4.14.34-v7+
+gyp ERR! command "/usr/local/bin/node" "/usr/local/lib/node_modules/npm/node_modules/node-gyp/bin/node-gyp.js" "rebuild"
+gyp ERR! cwd /usr/local/lib/node_modules/homebridge/node_modules/mdns
+gyp ERR! node -v v8.11.3
+gyp ERR! node-gyp -v v3.6.2
+gyp ERR! not ok 
+npm ERR! code ELIFECYCLE
+npm ERR! errno 1
+npm ERR! mdns@2.4.0 install: `node-gyp rebuild`
+npm ERR! Exit status 1
+npm ERR! 
+npm ERR! Failed at the mdns@2.4.0 install script.
+npm ERR! This is probably not a problem with npm. There is likely additional logging output above.
+
+npm ERR! A complete log of this run can be found in:
+npm ERR!     /root/.npm/_logs/2018-07-14T12_31_28_424Z-debug.log
+
+```
+
+
+https://stackoverflow.com/questions/19585117/error-dns-sd-h-no-such-file-or-directory
+```
+$ sudo apt-get install -y libavahi-compat-libdnssd-dev
+```
+
+リトライ
+```
+$ sudo npm install --unsafe-perm mdns
+
+> mdns@2.4.0 install /usr/local/lib/node_modules/homebridge/node_modules/mdns
+> node-gyp rebuild
+
+make: Entering directory '/usr/local/lib/node_modules/homebridge/node_modules/mdns/build'
+  CXX(target) Release/obj.target/dns_sd_bindings/src/dns_sd.o
+  CXX(target) Release/obj.target/dns_sd_bindings/src/dns_service_browse.o
+../src/dns_service_browse.cpp: In function ‘void node_mdns::OnServiceChanged(DNSServiceRef, DNSServiceFlags, uint32_t, DNSServiceErrorType, const char*, const char*, const char*, void*)’:
+../src/dns_service_browse.cpp:39:50: warning: ‘v8::Local<v8::Value> Nan::MakeCallback(v8::Local<v8::Object>, v8::Local<v8::Function>, int, v8::Local<v8::Value>*)’ is deprecated [-Wdeprecated-declarations]
+     Nan::MakeCallback(this_, callback, argc, info);
+                                                  ^
+In file included from ../src/mdns.hpp:12:0,
+                 from ../src/dns_service_browse.cpp:1:
+../../nan/nan.h:929:46: note: declared here
+   NAN_DEPRECATED inline v8::Local<v8::Value> MakeCallback(
+                                              ^~~~~~~~~~~~
+  CXX(target) Release/obj.target/dns_sd_bindings/src/dns_service_enumerate_domains.o
+../src/dns_service_enumerate_domains.cpp: In function ‘void node_mdns::OnEnumeration(DNSServiceRef, DNSServiceFlags, uint32_t, DNSServiceErrorType, const char*, void*)’:
+../src/dns_service_enumerate_domains.cpp:29:50: warning: ‘v8::Local<v8::Value> Nan::MakeCallback(v8::Local<v8::Object>, v8::Local<v8::Function>, int, v8::Local<v8::Value>*)’ is deprecated [-Wdeprecated-declarations]
+     Nan::MakeCallback(this_, callback, argc, info);
+                                                  ^
+In file included from ../src/mdns.hpp:12:0,
+                 from ../src/dns_service_enumerate_domains.cpp:1:
+../../nan/nan.h:929:46: note: declared here
+   NAN_DEPRECATED inline v8::Local<v8::Value> MakeCallback(
+                                              ^~~~~~~~~~~~
+  CXX(target) Release/obj.target/dns_sd_bindings/src/dns_service_get_addr_info.o
+  CXX(target) Release/obj.target/dns_sd_bindings/src/dns_service_process_result.o
+  CXX(target) Release/obj.target/dns_sd_bindings/src/dns_service_ref.o
+  CXX(target) Release/obj.target/dns_sd_bindings/src/dns_service_ref_deallocate.o
+  CXX(target) Release/obj.target/dns_sd_bindings/src/dns_service_ref_sock_fd.o
+  CXX(target) Release/obj.target/dns_sd_bindings/src/dns_service_register.o
+../src/dns_service_register.cpp: In function ‘void node_mdns::OnServiceRegistered(DNSServiceRef, DNSServiceFlags, DNSServiceErrorType, const char*, const char*, const char*, void*)’:
+../src/dns_service_register.cpp:48:54: warning: ‘v8::Local<v8::Value> Nan::MakeCallback(v8::Local<v8::Object>, v8::Local<v8::Function>, int, v8::Local<v8::Value>*)’ is deprecated [-Wdeprecated-declarations]
+         Nan::MakeCallback(this_, callback, argc, info);
+                                                      ^
+In file included from ../src/mdns.hpp:12:0,
+                 from ../src/dns_service_register.cpp:1:
+../../nan/nan.h:929:46: note: declared here
+   NAN_DEPRECATED inline v8::Local<v8::Value> MakeCallback(
+                                              ^~~~~~~~~~~~
+  CXX(target) Release/obj.target/dns_sd_bindings/src/dns_service_resolve.o
+../src/dns_service_resolve.cpp: In function ‘void node_mdns::OnResolve(DNSServiceRef, DNSServiceFlags, uint32_t, DNSServiceErrorType, const char*, const char*, uint16_t, uint16_t, const unsigned char*, void*)’:
+../src/dns_service_resolve.cpp:51:50: warning: ‘v8::Local<v8::Value> Nan::MakeCallback(v8::Local<v8::Object>, v8::Local<v8::Function>, int, v8::Local<v8::Value>*)’ is deprecated [-Wdeprecated-declarations]
+     Nan::MakeCallback(this_, callback, argc, info);
+                                                  ^
+In file included from ../src/mdns.hpp:12:0,
+                 from ../src/dns_service_resolve.cpp:1:
+../../nan/nan.h:929:46: note: declared here
+   NAN_DEPRECATED inline v8::Local<v8::Value> MakeCallback(
+                                              ^~~~~~~~~~~~
+  CXX(target) Release/obj.target/dns_sd_bindings/src/dns_service_update_record.o
+  CXX(target) Release/obj.target/dns_sd_bindings/src/mdns_utils.o
+  CXX(target) Release/obj.target/dns_sd_bindings/src/network_interface.o
+  CXX(target) Release/obj.target/dns_sd_bindings/src/socket_watcher.o
+../src/socket_watcher.cpp: In static member function ‘static void node_mdns::SocketWatcher::Callback(uv_poll_t*, int, int)’:
+../src/socket_watcher.cpp:100:63: warning: ‘v8::Local<v8::Value> Nan::MakeCallback(v8::Local<v8::Object>, v8::Local<v8::Function>, int, v8::Local<v8::Value>*)’ is deprecated [-Wdeprecated-declarations]
+         Nan::MakeCallback(watcher->handle(), callback, 2, argv);
+                                                               ^
+In file included from ../src/mdns.hpp:12:0,
+                 from ../src/socket_watcher.cpp:1:
+../../nan/nan.h:929:46: note: declared here
+   NAN_DEPRECATED inline v8::Local<v8::Value> MakeCallback(
+                                              ^~~~~~~~~~~~
+  CXX(target) Release/obj.target/dns_sd_bindings/src/txt_record_ref.o
+  CXX(target) Release/obj.target/dns_sd_bindings/src/txt_record_create.o
+  CXX(target) Release/obj.target/dns_sd_bindings/src/txt_record_deallocate.o
+  CXX(target) Release/obj.target/dns_sd_bindings/src/txt_record_set_value.o
+  CXX(target) Release/obj.target/dns_sd_bindings/src/txt_record_get_length.o
+  CXX(target) Release/obj.target/dns_sd_bindings/src/txt_record_buffer_to_object.o
+  SOLINK_MODULE(target) Release/obj.target/dns_sd_bindings.node
+  COPY Release/dns_sd_bindings.node
+make: Leaving directory '/usr/local/lib/node_modules/homebridge/node_modules/mdns/build'
++ mdns@2.4.0
+added 2 packages in 78.434s
+```
+
+ないので
+```
+cd /usr/local/lib/node_modules/homebridge/node_modules/mdns
+$ sudo node-gyp BUILDTYPE=Release rebuild
+```
+
+warningはでていたがいけてそう？
+
+```
+$ homebridge
+```
+とすると起動してQRコードがでた
+
+
+いろいろためした際に
+Homeへの追加時に
+
+このアクセサリはすでに追加されています
+リセットしてください
+
+といわれた場合
+
+
 
 Refference
 ----------------------------------------------------------------------
-[](https://)

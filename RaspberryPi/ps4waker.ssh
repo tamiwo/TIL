@@ -1,0 +1,30 @@
+sudo npm install -g ps4-waker
+
+sudo ps4-waker
+playstation app 起動
+
+PS4 Second Screen起動
+
+ps4-waker が選べる
+
+sudo ps4-wakerのコマンドが進む
+
+Got credentials!  { 'client-type': 'a',
+  'auth-type': 'C',
+  'user-credential': 'd037646ddfb8c33a94e7e749845ebaca391135ff42c30dd768b1be35c9283e86' }
+Go to 'Settings -> PlayStation(R) App Connection Settings -> Add Device' on your PS4 to obtain the PIN code.
+Pin code> 
+Pin is required
+
+PS4でモバイルアプリ接続設定->機器の登録に進む
+表示されたPINコードを以下のコマンドで入れる
+
+$ sudo ps4-waker --pin XXXXXXXX
+Logged into device! Future uses should succeed
+
+
+起動
+$ sudo ps4-waker
+
+スタンバイ
+$ sudo ps4-waker standby

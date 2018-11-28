@@ -24,6 +24,12 @@ $ sudo apt install unclutter
 --kiosk：全画面モード
 --incongnito：シークレットモードで起動する
 
+kioskモードは画面がつきっぱなしなので
+フルスクリーンにする
+--window-size=800,600
+--window-pos=0,0
+
+
 Refference
 ----------------------------------------------------------------------
 [Raspberry Pi3でキオスク端末(自動ログイン＋ブラウザ起動)を作る。](https://qiita.com/yyano/items/c08705994363b9526d07)
